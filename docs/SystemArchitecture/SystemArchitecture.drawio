@@ -1,0 +1,102 @@
+<mxfile host="Electron" modified="2023-10-14T01:08:16.658Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="Kw_aSvnf-lmbtnUb6anl" version="22.0.2" type="device">
+  <diagram name="Page-1" id="T3TXbwbl1JdMzvz3KKBe">
+    <mxGraphModel dx="2058" dy="1180" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="GdBYKPozBK1tamgtGWEW-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="GdBYKPozBK1tamgtGWEW-56" target="GdBYKPozBK1tamgtGWEW-21" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-56" value="Service Bus Sidecar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#d6b656;fontSize=16;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="640" y="680" width="145" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-59" value="C# Service Bus Sidecar" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#FFF2CC;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Logo_C_sharp.svg/1200px-Logo_C_sharp.svg.png;" parent="1" vertex="1">
+          <mxGeometry x="685.8299999999999" y="730" width="53.35" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-65" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="40" y="40" width="560" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-20" value="Frontend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;verticalAlign=top;" parent="GdBYKPozBK1tamgtGWEW-65" vertex="1">
+          <mxGeometry width="560" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-3" value="React Frontend" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#DAE8FC;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png;" parent="GdBYKPozBK1tamgtGWEW-65" vertex="1">
+          <mxGeometry x="172.5" y="30" width="69.03" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-4" value="Blazor Frontend" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#DAE8FC;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/d/d0/Blazor.png;" parent="GdBYKPozBK1tamgtGWEW-65" vertex="1">
+          <mxGeometry x="325.5" y="30" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-6" value="Electron Frontend" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#DAE8FC;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/2048px-Electron_Software_Framework_Logo.svg.png;fontColor=default;" parent="GdBYKPozBK1tamgtGWEW-65" vertex="1">
+          <mxGeometry x="25" y="30" width="65" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-5" value="Angular Frontend" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#DAE8FC;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/2048px-Angular_full_color_logo.svg.png;fontColor=default;" parent="GdBYKPozBK1tamgtGWEW-65" vertex="1">
+          <mxGeometry x="475" y="30" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-66" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="40" y="200" width="560" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-61" value="API Gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673a6;fontSize=16;verticalAlign=top;fontStyle=1;container=0;" parent="GdBYKPozBK1tamgtGWEW-66" vertex="1">
+          <mxGeometry width="560" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-1" value="Azure API Management" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/API_Management_Services.svg;labelBackgroundColor=#E1D5E7;" parent="GdBYKPozBK1tamgtGWEW-66" vertex="1">
+          <mxGeometry x="247.5" y="34.285714285714285" width="55.71428571428571" height="51.42857142857142" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-67" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="40" y="360" width="560" height="280" as="geometry" />
+        </mxCell>
+        <UserObject label="Counter Service" id="GdBYKPozBK1tamgtGWEW-31">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=16;fontStyle=1;verticalAlign=top;" parent="GdBYKPozBK1tamgtGWEW-67" vertex="1">
+            <mxGeometry width="560" height="280" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="GdBYKPozBK1tamgtGWEW-67" source="GdBYKPozBK1tamgtGWEW-28" target="GdBYKPozBK1tamgtGWEW-36" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-28" value="C# Counter Service" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#D5E8D4;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Logo_C_sharp.svg/1200px-Logo_C_sharp.svg.png;" parent="GdBYKPozBK1tamgtGWEW-67" vertex="1">
+          <mxGeometry x="41.980508474576254" y="51.85185185185185" width="50.637288135593224" height="56.949152542372886" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-69" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="GdBYKPozBK1tamgtGWEW-67" source="GdBYKPozBK1tamgtGWEW-29" target="GdBYKPozBK1tamgtGWEW-37" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-29" value="Rust Counter Service" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#D5E8D4;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rust_programming_language_black_logo.svg/1024px-Rust_programming_language_black_logo.svg.png;" parent="GdBYKPozBK1tamgtGWEW-67" vertex="1">
+          <mxGeometry x="250.43" y="51.85185185185185" width="56.949152542372886" height="56.949152542372886" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="GdBYKPozBK1tamgtGWEW-67" source="GdBYKPozBK1tamgtGWEW-30" target="GdBYKPozBK1tamgtGWEW-35" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-30" value="Python Counter Service" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#D5E8D4;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png;" parent="GdBYKPozBK1tamgtGWEW-67" vertex="1">
+          <mxGeometry x="464.6191525423729" y="51.85185185185185" width="53.40881355932204" height="58.5342372881356" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-35" value="PostgresSQL" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#D5E8D4;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/120px-Postgresql_elephant.svg.png;" parent="GdBYKPozBK1tamgtGWEW-67" vertex="1">
+          <mxGeometry x="463.77101694915257" y="176.29629629629628" width="55.107796610169494" height="56.949152542372886" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-36" value="Cosmos DB" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#D5E8D4;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://estuary.dev/static/afbdfac08fff3024d8ea80672915fb8d/321f9/Cosmos_DB_logo_4bdaaae2a9.png;" parent="GdBYKPozBK1tamgtGWEW-67" vertex="1">
+          <mxGeometry x="38.89576271186439" y="176.29629629629628" width="56.806779661016954" height="56.949152542372886" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-37" value="Redis" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#D5E8D4;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://assets.stickpng.com/images/584830b5cef1014c0b5e4a9c.png;" parent="GdBYKPozBK1tamgtGWEW-67" vertex="1">
+          <mxGeometry x="245.75559322033894" y="176.29629629629628" width="66.28881355932204" height="56.949152542372886" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-70" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="40" y="680" width="560" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-21" value="Service Bus" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#d79b00;fontSize=16;verticalAlign=top;fontStyle=1;container=0;" parent="GdBYKPozBK1tamgtGWEW-70" vertex="1">
+          <mxGeometry width="560" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-19" value="Azure Service Bus" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/Service_Bus.svg;labelBackgroundColor=#FFE6CC;container=0;" parent="GdBYKPozBK1tamgtGWEW-70" vertex="1">
+          <mxGeometry x="248.53241379310342" y="42.23140495867767" width="62.94214876033058" height="55.53719008264463" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="GdBYKPozBK1tamgtGWEW-20" target="GdBYKPozBK1tamgtGWEW-61" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="GdBYKPozBK1tamgtGWEW-61" target="GdBYKPozBK1tamgtGWEW-31" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-74" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="GdBYKPozBK1tamgtGWEW-31" target="GdBYKPozBK1tamgtGWEW-21" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GdBYKPozBK1tamgtGWEW-75" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="GdBYKPozBK1tamgtGWEW-61" target="GdBYKPozBK1tamgtGWEW-56" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,61 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package distributed_counter.protos;
+
+service CounterService {
+  rpc GetMetadata(google.protobuf.Empty) returns (CounterServiceMetadata);
+  rpc IncrementCounter(IncrementCounterRequest) returns (IncrementCounterResponse);
+  rpc DecrementCounter(DecrementCounterRequest) returns (DecrementCounterResponse);
+  rpc GetCurrentValue(GetCurrentValueRequest) returns (GetCurrentValueResponse);
+}
+
+message CounterServiceMetadata {
+  ServiceMetadata service_metadata = 1;
+  ServerMetadata server_metadata = 2;
+  DatabaseMetadata database_metadata = 3;
+}
+
+message ServiceMetadata {
+  string language = 1;
+  string version = 2;
+}
+
+message ServerMetadata {
+  string id = 1;
+  string platform = 2;
+  double up_time = 3;
+}
+
+message DatabaseMetadata {
+  string id = 1;
+  string type = 2;
+}
+
+message IncrementCounterRequest {
+  string counter_id = 1;
+  uint32 increment_amount = 2;
+}
+
+message IncrementCounterResponse {
+  
+}
+
+message DecrementCounterRequest {
+  string counter_id = 1;
+  uint32 decrement_amount = 2;
+}
+
+message DecrementCounterResponse {
+  
+}
+
+message GetCurrentValueRequest {
+  string counter_id = 1;
+}
+
+message GetCurrentValueResponse {
+  string counter_id = 1;
+  sint64 value = 2;
+}
