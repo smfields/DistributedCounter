@@ -6,6 +6,7 @@ package distributed_counter.protos;
 
 service CounterService {
   rpc GetMetadata(google.protobuf.Empty) returns (CounterServiceMetadata);
+  rpc CreateCounter(CreateCounterRequest) returns (CreateCounterResponse);
   rpc IncrementCounter(IncrementCounterRequest) returns (IncrementCounterResponse);
   rpc DecrementCounter(DecrementCounterRequest) returns (DecrementCounterResponse);
   rpc GetCurrentValue(GetCurrentValueRequest) returns (GetCurrentValueResponse);
@@ -31,6 +32,14 @@ message ServerMetadata {
 message DatabaseMetadata {
   string id = 1;
   string type = 2;
+}
+
+message CreateCounterRequest {
+  sint64 initial_value = 1;
+}
+
+message CreateCounterResponse {
+  string counter_id = 1;
 }
 
 message IncrementCounterRequest {
