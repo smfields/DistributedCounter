@@ -8,10 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="..\..\Shared\Protos\counter_service.proto" GrpcServices="Server"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.49.0"/>
         <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.58.0-pre1" />
     </ItemGroup>
@@ -19,6 +15,13 @@
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Protobuf Include="..\..\Shared\Protos\counter_service.proto">
+        <Link>GRPC\Protos\counter_service.proto</Link>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
     </ItemGroup>
 
 </Project>
