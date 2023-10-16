@@ -1,5 +1,7 @@
-﻿using DistributedCounter.CounterService.Domain.CounterAggregate;
+﻿using DistributedCounter.CounterService.Application.Common;
+using DistributedCounter.CounterService.Domain.CounterAggregate;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace DistributedCounter.CounterService.Application.Counters.CreateCounter;
 
@@ -7,19 +9,15 @@ public record CreateCounterCommand(long InitialValue) : IRequest<CreateCounterRe
 
 public record CreateCounterResponse(Guid CounterId);
 
-public class CreateCounterCommandHandler : IRequestHandler<CreateCounterCommand, CreateCounterResponse>
+public class CreateCounterCommandHandler(IApplicationDbContext dbContext) : IRequestHandler<CreateCounterCommand, CreateCounterResponse>
 {
-    private readonly ICounterRepository _counterRepository;
-
-    public CreateCounterCommandHandler(ICounterRepository counterRepository)
-    {
-        _counterRepository = counterRepository;
-    }
-
     public async Task<CreateCounterResponse> Handle(CreateCounterCommand command, CancellationToken cancellationToken)
     {
         var counter = new Counter(command.InitialValue);
-        await _counterRepository.AddCounterAsync(counter);
+
+        await dbContext.Counters.AddAsync(counter, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        
         return new CreateCounterResponse(counter.Id);
     }
 }

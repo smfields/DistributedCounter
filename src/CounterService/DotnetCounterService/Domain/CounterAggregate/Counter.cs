@@ -6,6 +6,10 @@ namespace DistributedCounter.CounterService.Domain.CounterAggregate;
 public class Counter : Entity<Guid>
 {
     public long Value { get; private set; }
+
+    private Counter() : base(Guid.Empty)
+    {
+    }
     
     public Counter(long initialValue) : base(Guid.NewGuid())
     {

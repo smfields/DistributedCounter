@@ -1,4 +1,4 @@
-﻿using DistributedCounter.CounterService.Domain.CounterAggregate;
+﻿using DistributedCounter.CounterService.Application.Common;
 using MediatR;
 
 namespace DistributedCounter.CounterService.Application.Counters.IncrementCounter;
@@ -10,20 +10,23 @@ public record IncrementCounterResponse
     public static IncrementCounterResponse Empty = new();
 }
 
-public class IncrementCounterCommandHandler : IRequestHandler<IncrementCounterCommand, IncrementCounterResponse>
+public class IncrementCounterCommandHandler(IApplicationDbContext dbContext) : IRequestHandler<IncrementCounterCommand, IncrementCounterResponse>
 {
-    private readonly ICounterRepository _counterRepository;
-
-    public IncrementCounterCommandHandler(ICounterRepository counterRepository)
-    {
-        _counterRepository = counterRepository;
-    }
-    
     public async Task<IncrementCounterResponse> Handle(IncrementCounterCommand command, CancellationToken cancellationToken)
     {
-        var counter = await _counterRepository.GetCounterAsync(command.CounterId);
+        var counter = await dbContext.Counters.FindAsync(new object?[]
+        {
+            command.CounterId
+        }, cancellationToken: cancellationToken);
+
+        if (counter is null)
+        {
+            throw new KeyNotFoundException("Counter: " + command.CounterId);
+        }
+        
         counter.Increment(command.Amount);
-        await _counterRepository.UpdateAsync(counter);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        
         return IncrementCounterResponse.Empty;
     }
 }
