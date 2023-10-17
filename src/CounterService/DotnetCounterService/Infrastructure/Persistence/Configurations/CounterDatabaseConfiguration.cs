@@ -10,5 +10,8 @@ public class CounterDatabaseConfiguration : IEntityTypeConfiguration<Counter>
     {
         builder.HasKey(counter => counter.Id);
         builder.Ignore(counter => counter.Events);
+        builder
+            .Property(counter => counter.Value)
+            .IsConcurrencyToken();
     }
 }

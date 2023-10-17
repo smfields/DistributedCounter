@@ -1,0 +1,11 @@
+{
+  "call": "distributed_counter.protos.CounterService.IncrementCounter",
+  "total": 2000,
+  "concurrency": 50,
+  "data": {
+    "counter_id": "b685517b-30fe-4f99-a8c7-ac7ed29b973b", 
+    "increment_amount": 1
+  },
+  "host": "localhost:5135",
+  "insecure": true
+}
