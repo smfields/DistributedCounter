@@ -1,4 +1,5 @@
 ﻿using DistributedCounter.CounterService.Application.Common;
+using DistributedCounter.CounterService.Application.Common.Locking;
 using MediatR;
 
 namespace DistributedCounter.CounterService.Application.Counters.IncrementCounter;
@@ -7,13 +8,15 @@ public record IncrementCounterCommand(Guid CounterId, uint Amount) : IRequest<In
 
 public record IncrementCounterResponse
 {
-    public static IncrementCounterResponse Empty = new();
+    public static readonly IncrementCounterResponse Empty = new();
 }
 
-public class IncrementCounterCommandHandler(IApplicationDbContext dbContext) : IRequestHandler<IncrementCounterCommand, IncrementCounterResponse>
+public class IncrementCounterCommandHandler(IApplicationDbContext dbContext, ILockFactory lockFactory) : IRequestHandler<IncrementCounterCommand, IncrementCounterResponse>
 {
     public async Task<IncrementCounterResponse> Handle(IncrementCounterCommand command, CancellationToken cancellationToken)
     {
+        await using var counterLock = await lockFactory.CreateLockAsync(command.CounterId.ToString(), cancellationToken: cancellationToken);
+        
         var counter = await dbContext.Counters.FindAsync(new object?[]
         {
             command.CounterId
