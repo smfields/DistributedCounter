@@ -32,3 +32,5 @@ $results = ghz --config ./increment_benchmark_config.json --data $increment_coun
 
 Write-Output "Uploading results..."
 $results | Invoke-WebRequest -Uri "$GhzWebUri/api/projects/$ProjectId/ingest" -Method POST -ContentType 'application/json' | Out-Null
+
+Write-Output "Benchmark complete!"
