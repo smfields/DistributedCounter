@@ -24,6 +24,8 @@ builder.Services.AddMediatR(opts =>
 });
 builder.Services.AddDbContext<ApplicationDbContext>(opts => 
     opts.UseNpgsql(builder.Configuration.GetConnectionString("Database"))
+        .EnableDetailedErrors()
+        .EnableSensitiveDataLogging()
 );
 builder.Services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 builder.Services.AddSingleton<IConnectionMultiplexer>(
