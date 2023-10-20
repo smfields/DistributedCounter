@@ -11,9 +11,4 @@
       <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0-rc.2" />
-      <PackageReference Include="RedLock.net" Version="2.3.2" />
-    </ItemGroup>
-
 </Project>
