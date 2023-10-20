@@ -1,31 +1,37 @@
-﻿using DistributedCounter.CounterService.Domain.Common;
-using DistributedCounter.CounterService.Domain.CounterAggregate.Events;
+﻿namespace DistributedCounter.CounterService.Domain.CounterAggregate;
 
-namespace DistributedCounter.CounterService.Domain.CounterAggregate;
+public interface ICounter : IGrainWithGuidKey
+{
+    public ValueTask<long> GetCurrentValue();
+    public ValueTask Initialize(long initialValue);
+    public ValueTask Increment(uint amount);
+    public ValueTask Decrement(uint amount);
+}
 
-public class Counter : Entity<Guid>
+public class Counter : ICounter
 {
     public long Value { get; private set; }
 
-    private Counter() : base(Guid.Empty)
+    public ValueTask<long> GetCurrentValue()
     {
+        return ValueTask.FromResult(Value);
     }
-    
-    public Counter(long initialValue) : base(Guid.NewGuid())
+
+    public ValueTask Initialize(long initialValue)
     {
         Value = initialValue;
-        AddDomainEvent(new CounterCreatedEvent(this));
+        return ValueTask.CompletedTask;
     }
 
-    public void Increment(uint amount)
+    public ValueTask Increment(uint amount)
     {
         Value += amount;
-        AddDomainEvent(new CounterIncrementedEvent(this, amount));
+        return ValueTask.CompletedTask;
     }
 
-    public void Decrement(uint amount)
+    public ValueTask Decrement(uint amount)
     {
         Value -= amount;
-        AddDomainEvent(new CounterDecrementedEvent(this, amount));
+        return ValueTask.CompletedTask;
     }
 }

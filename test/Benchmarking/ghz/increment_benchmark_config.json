@@ -9,5 +9,6 @@
   "host": "localhost:50051",
   "insecure": true,
   "format": "json",
-  "skipFirst": 1000
+  "skipFirst": 1000,
+  "timeout": 0
 }
