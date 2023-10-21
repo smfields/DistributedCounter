@@ -1,0 +1,10 @@
+{
+  "call": "distributed_counter.protos.CounterService.CreateCounter",
+  "total": 10000,
+  "concurrency": 256,
+  "host": "localhost:50051",
+  "insecure": true,
+  "format": "json",
+  "skipFirst": 1000,
+  "timeout": 0
+}

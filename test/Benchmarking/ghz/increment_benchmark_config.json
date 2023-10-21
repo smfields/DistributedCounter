@@ -1,6 +1,6 @@
 {
   "call": "distributed_counter.protos.CounterService.IncrementCounter",
-  "total": 50000,
+  "total": 10000,
   "concurrency": 256,
   "data": {
     "counter_id": "b685517b-30fe-4f99-a8c7-ac7ed29b973b", 

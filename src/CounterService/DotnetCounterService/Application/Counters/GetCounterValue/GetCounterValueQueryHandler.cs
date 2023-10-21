@@ -10,8 +10,8 @@ public class GetCounterValueQueryHandler(IGrainFactory grainFactory) : IRequestH
 {
     public async Task<GetCounterValueResponse> Handle(GetCounterValueQuery query, CancellationToken cancellationToken)
     {
-        var counter = grainFactory.GetGrain<ICounter>(query.CounterId);
-        var currentValue = await counter.GetCurrentValue();
+        var counterClient = new CounterClient(query.CounterId, grainFactory);
+        var currentValue = await counterClient.GetCurrentValue();
         return new GetCounterValueResponse(currentValue);
     }
 }

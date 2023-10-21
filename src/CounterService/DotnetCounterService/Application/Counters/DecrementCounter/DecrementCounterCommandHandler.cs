@@ -14,8 +14,8 @@ public class DecrementCounterCommandHandler(IGrainFactory grainFactory) : IReque
 {
     public async Task<DecrementCounterResponse> Handle(DecrementCounterCommand command, CancellationToken cancellationToken)
     {
-        var counter = grainFactory.GetGrain<ICounter>(command.CounterId);
-        await counter.Decrement(command.Amount);
+        var counterClient = new CounterClient(command.CounterId, grainFactory);
+        await counterClient.Decrement(command.Amount);
         return DecrementCounterResponse.Empty;
     }
 }

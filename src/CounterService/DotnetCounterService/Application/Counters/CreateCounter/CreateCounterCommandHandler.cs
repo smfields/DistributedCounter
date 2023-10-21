@@ -12,8 +12,8 @@ public class CreateCounterCommandHandler(IGrainFactory grainFactory) : IRequestH
     public async Task<CreateCounterResponse> Handle(CreateCounterCommand command, CancellationToken cancellationToken)
     {
         var counterId = Guid.NewGuid();
-        var counter = grainFactory.GetGrain<ICounter>(counterId);
-        await counter.Initialize(command.InitialValue);
+        var counterClient = new CounterClient(counterId, grainFactory);
+        await counterClient.Initialize(command.InitialValue);
         return new CreateCounterResponse(counterId);
     }
 }

@@ -8,13 +8,14 @@ builder.Host.UseOrleans(siloBuilder =>
 {
     siloBuilder
         .UseLocalhostClustering()
-        .AddCosmosGrainStorageAsDefault(configureOptions: options =>
-        {
-            options.DatabaseName = "Orleans";
-            options.DatabaseThroughput = 1000;
-            options.ContainerName = "OrleansStorage";
-            options.ConfigureCosmosClient(builder.Configuration.GetConnectionString("Database"));
-        });
+        // .AddMemoryGrainStorageAsDefault();
+    .AddCosmosGrainStorageAsDefault(configureOptions: options =>
+    {
+        options.DatabaseName = "Orleans";
+        options.DatabaseThroughput = 1000;
+        options.ContainerName = "OrleansStorage";
+        options.ConfigureCosmosClient(builder.Configuration.GetConnectionString("Database"));
+    });
 
 });
 builder.Services.AddGrpc(opts =>

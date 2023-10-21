@@ -1,9 +1,6 @@
-﻿using Orleans.Concurrency;
-using Orleans.Runtime;
+﻿namespace DistributedCounter.CounterService.Domain.CounterAggregate;
 
-namespace DistributedCounter.CounterService.Domain.CounterAggregate;
-
-public interface ICounter : IGrainWithGuidKey
+public interface ICounterClient
 {
     public ValueTask<long> GetCurrentValue();
     public ValueTask Initialize(long initialValue);
@@ -11,34 +8,47 @@ public interface ICounter : IGrainWithGuidKey
     public ValueTask Decrement(uint amount);
 }
 
-public class CounterState
+public class CounterClient : ICounterClient
 {
-    public long Value { get; set; }
-}
+    private const int ShardCount = 100;
+    private readonly ICounterShard[] _shards = new ICounterShard[ShardCount];
+    private readonly Random _random = new();
 
-public class Counter([PersistentState("counter")]IPersistentState<CounterState> counter) : ICounter
-{
-    [ReadOnly]
-    public ValueTask<long> GetCurrentValue()
+    public CounterClient(
+        Guid id,
+        IGrainFactory grainFactory
+    )
     {
-        return ValueTask.FromResult(counter.State.Value);
+        for (var i = 0; i < ShardCount; i++)
+        {
+            _shards[i] = grainFactory.GetGrain<ICounterShard>(id, i.ToString());
+        }
+    }
+    
+    public async ValueTask<long> GetCurrentValue()
+    {
+        var tasks = _shards.Select(async shard => await shard.GetCurrentValue());
+        var values = await Task.WhenAll(tasks);
+        return values.Sum();
     }
 
     public async ValueTask Initialize(long initialValue)
     {
-        counter.State.Value = initialValue;
-        await counter.WriteStateAsync();
+        await RandomShard().Initialize(initialValue);
     }
 
     public async ValueTask Increment(uint amount)
     {
-        counter.State.Value += amount;
-        await counter.WriteStateAsync();
+        await RandomShard().Increment(amount);
     }
 
     public async ValueTask Decrement(uint amount)
     {
-        counter.State.Value += amount;
-        await counter.WriteStateAsync();
+        await RandomShard().Decrement(amount);
+    }
+
+    private ICounterShard RandomShard()
+    {
+        return _random.GetItems(_shards, 1)[0];
     }
 }
