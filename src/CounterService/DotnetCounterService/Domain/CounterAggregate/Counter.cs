@@ -1,4 +1,7 @@
-﻿namespace DistributedCounter.CounterService.Domain.CounterAggregate;
+﻿using Orleans.Concurrency;
+using Orleans.Runtime;
+
+namespace DistributedCounter.CounterService.Domain.CounterAggregate;
 
 public interface ICounter : IGrainWithGuidKey
 {
@@ -8,30 +11,34 @@ public interface ICounter : IGrainWithGuidKey
     public ValueTask Decrement(uint amount);
 }
 
-public class Counter : ICounter
+public class CounterState
 {
-    public long Value { get; private set; }
+    public long Value { get; set; }
+}
 
+public class Counter([PersistentState("counter")]IPersistentState<CounterState> counter) : ICounter
+{
+    [ReadOnly]
     public ValueTask<long> GetCurrentValue()
     {
-        return ValueTask.FromResult(Value);
+        return ValueTask.FromResult(counter.State.Value);
     }
 
-    public ValueTask Initialize(long initialValue)
+    public async ValueTask Initialize(long initialValue)
     {
-        Value = initialValue;
-        return ValueTask.CompletedTask;
+        counter.State.Value = initialValue;
+        await counter.WriteStateAsync();
     }
 
-    public ValueTask Increment(uint amount)
+    public async ValueTask Increment(uint amount)
     {
-        Value += amount;
-        return ValueTask.CompletedTask;
+        counter.State.Value += amount;
+        await counter.WriteStateAsync();
     }
 
-    public ValueTask Decrement(uint amount)
+    public async ValueTask Decrement(uint amount)
     {
-        Value -= amount;
-        return ValueTask.CompletedTask;
+        counter.State.Value += amount;
+        await counter.WriteStateAsync();
     }
 }
