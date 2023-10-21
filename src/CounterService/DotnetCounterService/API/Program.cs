@@ -8,12 +8,12 @@ builder.Host.UseOrleans(siloBuilder =>
 {
     siloBuilder
         .UseLocalhostClustering()
-        .AddCosmosGrainStorageAsDefault(configureOptions: static options =>
+        .AddCosmosGrainStorageAsDefault(configureOptions: options =>
         {
             options.DatabaseName = "Orleans";
             options.DatabaseThroughput = 1000;
             options.ContainerName = "OrleansStorage";
-            options.ConfigureCosmosClient("AccountEndpoint=https://distributed-counter-db.documents.azure.com:443/;AccountKey=fFndWiRuX9idm4n4sQxiHcHX26T3F3iBqxb5zzmSN7qxHyITFgrhjGwqE1qAq9WWAMeLjmsEQuOyACDbbNRHew==;");
+            options.ConfigureCosmosClient(builder.Configuration.GetConnectionString("Database"));
         });
 
 });
