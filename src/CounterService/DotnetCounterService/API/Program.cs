@@ -1,7 +1,5 @@
 using DistributedCounter.CounterService.API.GRPC.Services;
-using DistributedCounter.CounterService.Domain.Persistence;
 using DistributedCounter.CounterService.Utilities.DependencyInjection;
-using DistributedCounter.CounterService.Application.Counters.CreateCounter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,15 +7,14 @@ builder.Host.UseOrleans(siloBuilder =>
 {
     siloBuilder
         .UseLocalhostClustering()
-        // .AddMemoryGrainStorageAsDefault();
-    .AddCosmosGrainStorageAsDefault(configureOptions: options =>
-    {
-        options.DatabaseName = "Orleans";
-        options.DatabaseThroughput = 1000;
-        options.ContainerName = "OrleansStorage";
-        options.ConfigureCosmosClient(builder.Configuration.GetConnectionString("Database"));
-    });
-
+        .AddMemoryGrainStorageAsDefault();
+        // .AddCosmosGrainStorageAsDefault(configureOptions: options =>
+        // {
+        //     options.DatabaseName = "Orleans";
+        //     options.DatabaseThroughput = 1000;
+        //     options.ContainerName = "OrleansStorage";
+        //     options.ConfigureCosmosClient(builder.Configuration.GetConnectionString("Database"));
+        // });
 });
 
 builder.Services.RegisterFromServiceModules(servicesAvailableToModules: services =>
