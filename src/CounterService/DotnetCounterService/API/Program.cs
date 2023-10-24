@@ -1,9 +1,10 @@
 using DistributedCounter.CounterService.API.GRPC.Services;
+using DistributedCounter.CounterService.Domain.Persistence;
+using DistributedCounter.CounterService.Utilities.DependencyInjection;
 using DistributedCounter.CounterService.Application.Counters.CreateCounter;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Host.UseOrleans(siloBuilder =>
 {
     siloBuilder
@@ -18,19 +19,15 @@ builder.Host.UseOrleans(siloBuilder =>
     });
 
 });
-builder.Services.AddGrpc(opts =>
+
+builder.Services.RegisterFromServiceModules(servicesAvailableToModules: services =>
 {
-    opts.EnableDetailedErrors = true;
-});
-builder.Services.AddGrpcReflection();
-builder.Services.AddMediatR(opts =>
-{
-    opts.RegisterServicesFromAssemblyContaining<CreateCounterCommand>();
+    services.AddSingleton<IConfiguration>(builder.Configuration);
+    services.AddSingleton(builder.Environment);
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 app.MapGrpcService<CounterService>();
 app.MapGrpcReflectionService();
 
