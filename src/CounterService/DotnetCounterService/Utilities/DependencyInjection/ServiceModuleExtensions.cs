@@ -1,31 +1,25 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 
 namespace DistributedCounter.CounterService.Utilities.DependencyInjection;
 
 public static class ServiceModuleExtensions
 {
-    public static void RegisterAssemblyModules(
-        this IHostApplicationBuilder host, 
-        Assembly assembly,
-        Action<IServiceCollection>? serviceModuleServices = null
+    public static void RegisterFromServiceModules(
+        this IServiceCollection services,
+        Action<IServiceCollection>? servicesAvailableToModules = null
     )
     {
         // Hold services including ServiceModules and dependencies they may require
         var serviceCollection = new ServiceCollection();
         
         // Add service module dependencies
-        serviceCollection.AddSingleton<IConfiguration>(host.Configuration);
-        serviceCollection.AddSingleton(host.Environment);
-        serviceModuleServices?.Invoke(serviceCollection);
+        servicesAvailableToModules?.Invoke(serviceCollection);
 
         // Scan for all service modules and register with DI container
-        assembly
-            .GetTypes()
-            .Where(type => type.IsAssignableTo(typeof(ServiceModule)))
+        AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(type => type.IsAssignableTo(typeof(ServiceModule)) && !type.IsAbstract)
             .ToList()
             .ForEach(type => serviceCollection.AddSingleton(typeof(ServiceModule), type));
         
@@ -36,10 +30,10 @@ public static class ServiceModuleExtensions
         // Load services from each module
         foreach (var module in serviceModules)
         {
-            module.Load(host.Services);
+            module.Load(services);
         }
         
         // Cleanup all service modules added
-        host.Services.RemoveAll(typeof(ServiceModule));
+        services.RemoveAll(typeof(ServiceModule));
     }
 }

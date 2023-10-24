@@ -7,4 +7,8 @@
         <RootNamespace>DistributedCounter.CounterService.Domain</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Utilities\Utilities.csproj" />
+    </ItemGroup>
+
 </Project>
