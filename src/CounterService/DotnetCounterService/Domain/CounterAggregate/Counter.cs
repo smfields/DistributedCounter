@@ -1,4 +1,6 @@
-﻿namespace DistributedCounter.CounterService.Domain.CounterAggregate;
+﻿using Orleans.Concurrency;
+
+namespace DistributedCounter.CounterService.Domain.CounterAggregate;
 
 public interface ICounterClient
 {
@@ -8,6 +10,7 @@ public interface ICounterClient
     public ValueTask Decrement(uint amount);
 }
 
+[Reentrant]
 public class CounterClient : ICounterClient
 {
     private const int ShardCount = 100;
@@ -25,6 +28,7 @@ public class CounterClient : ICounterClient
         }
     }
     
+    [ReadOnly]
     public async ValueTask<long> GetCurrentValue()
     {
         var tasks = _shards.Select(async shard => await shard.GetCurrentValue());
