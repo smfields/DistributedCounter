@@ -4,25 +4,21 @@ using DistributedCounter.CounterService.Application.Counters.CreateCounter;
 using DistributedCounter.CounterService.Application.Counters.DecrementCounter;
 using DistributedCounter.CounterService.Application.Counters.GetCounterValue;
 using DistributedCounter.CounterService.Application.Counters.IncrementCounter;
+using DistributedCounter.CounterService.Utilities;
 using DistributedCounter.Protos;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using MediatR;
+using Serilog.Context;
 using CreateCounterResponse = DistributedCounter.Protos.CreateCounterResponse;
 using DecrementCounterResponse = DistributedCounter.Protos.DecrementCounterResponse;
 using IncrementCounterResponse = DistributedCounter.Protos.IncrementCounterResponse;
 
-namespace DistributedCounter.CounterService.API.GRPC.Services;
+namespace DistributedCounter.CounterService.API.Counters.Services;
 
-public class CounterService : Protos.CounterService.CounterServiceBase
+public class CounterService(ISender sender, ILogger<CounterService> logger) : Protos.CounterService.CounterServiceBase
 {
-    private readonly ISender _sender;
     private static Guid _serverId = Guid.NewGuid();
-
-    public CounterService(ISender sender)
-    {
-        _sender = sender;
-    }
 
     public override Task<CounterServiceMetadata> GetMetadata(Empty request, ServerCallContext context)
     {
@@ -50,7 +46,7 @@ public class CounterService : Protos.CounterService.CounterServiceBase
     public override async Task<CreateCounterResponse> CreateCounter(CreateCounterRequest request, ServerCallContext context)
     {
         var command = new CreateCounterCommand(request.InitialValue);
-        var response = await _sender.Send(command);
+        var response = await sender.Send(command);
         return new CreateCounterResponse
         {
             CounterId = response.CounterId.ToString()
@@ -69,7 +65,7 @@ public class CounterService : Protos.CounterService.CounterServiceBase
         }
 
         var command = new IncrementCounterCommand(id, request.IncrementAmount);
-        await _sender.Send(command);
+        await sender.Send(command);
 
         return new IncrementCounterResponse();
     }
@@ -86,7 +82,7 @@ public class CounterService : Protos.CounterService.CounterServiceBase
         }
 
         var command = new DecrementCounterCommand(id, request.DecrementAmount);
-        await _sender.Send(command);
+        await sender.Send(command);
 
         return new DecrementCounterResponse();
     }
@@ -103,7 +99,7 @@ public class CounterService : Protos.CounterService.CounterServiceBase
         }
 
         var query = new GetCounterValueQuery(id);
-        var response = await _sender.Send(query);
+        var response = await sender.Send(query);
 
         return new GetCurrentValueResponse
         {

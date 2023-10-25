@@ -11,6 +11,8 @@
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-rc.2.23479.6" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-rc.2.23479.6" />
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0-rc.2.23479.6" />
+      <PackageReference Include="Scrutor" Version="4.2.2" />
+      <PackageReference Include="Serilog" Version="3.1.0-dev-02083" />
     </ItemGroup>
 
 </Project>

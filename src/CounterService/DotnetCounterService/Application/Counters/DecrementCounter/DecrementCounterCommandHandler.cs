@@ -7,14 +7,14 @@ public record DecrementCounterCommand(Guid CounterId, uint Amount) : IRequest<De
 
 public record DecrementCounterResponse
 {
-    public static DecrementCounterResponse Empty = new();
+    public static readonly DecrementCounterResponse Empty = new();
 }
 
-public class DecrementCounterCommandHandler(IGrainFactory grainFactory) : IRequestHandler<DecrementCounterCommand, DecrementCounterResponse>
+public class DecrementCounterCommandHandler(CounterClient.Factory counterClientFactory) : IRequestHandler<DecrementCounterCommand, DecrementCounterResponse>
 {
     public async Task<DecrementCounterResponse> Handle(DecrementCounterCommand command, CancellationToken cancellationToken)
     {
-        var counterClient = new CounterClient(command.CounterId, grainFactory);
+        var counterClient = counterClientFactory.CreateClientFor(command.CounterId);
         await counterClient.Decrement(command.Amount);
         return DecrementCounterResponse.Empty;
     }

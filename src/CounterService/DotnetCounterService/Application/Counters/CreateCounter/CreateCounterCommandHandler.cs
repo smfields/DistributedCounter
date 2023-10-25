@@ -7,12 +7,12 @@ public record CreateCounterCommand(long InitialValue) : IRequest<CreateCounterRe
 
 public record CreateCounterResponse(Guid CounterId);
 
-public class CreateCounterCommandHandler(IGrainFactory grainFactory) : IRequestHandler<CreateCounterCommand, CreateCounterResponse>
+public class CreateCounterCommandHandler(CounterClient.Factory counterClientFactory) : IRequestHandler<CreateCounterCommand, CreateCounterResponse>
 {
     public async Task<CreateCounterResponse> Handle(CreateCounterCommand command, CancellationToken cancellationToken)
     {
         var counterId = Guid.NewGuid();
-        var counterClient = new CounterClient(counterId, grainFactory);
+        var counterClient = counterClientFactory.CreateClientFor(counterId);
         await counterClient.Initialize(command.InitialValue);
         return new CreateCounterResponse(counterId);
     }
