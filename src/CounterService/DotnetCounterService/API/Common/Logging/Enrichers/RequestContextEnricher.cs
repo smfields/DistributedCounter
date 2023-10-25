@@ -8,9 +8,9 @@ public class RequestContextEnricher : ILogEventEnricher
 {
     public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
     {
-        var correlationId = propertyFactory.CreateProperty(nameof(RequestContext.CorrelationId), RequestContext.CorrelationId);
+        var traceId = propertyFactory.CreateProperty(nameof(RequestContext.TraceId), RequestContext.TraceId);
         var requestSource = propertyFactory.CreateProperty(nameof(RequestContext.RequestSource), RequestContext.RequestSource);
-        logEvent.AddPropertyIfAbsent(correlationId);
+        logEvent.AddPropertyIfAbsent(traceId);
         logEvent.AddPropertyIfAbsent(requestSource);
     }
 }

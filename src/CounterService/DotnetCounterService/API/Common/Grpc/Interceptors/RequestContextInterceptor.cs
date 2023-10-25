@@ -9,10 +9,7 @@ public class RequestContextInterceptor : Interceptor
     public override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request, ServerCallContext context,
         UnaryServerMethod<TRequest, TResponse> continuation)
     {
-        RequestContext.Initialize(
-            Guid.NewGuid().ToString(),
-            "gRPC"    
-        );
+        RequestContext.Initialize("gRPC");
         
         return base.UnaryServerHandler(request, context, continuation);
     }
