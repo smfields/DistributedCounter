@@ -9,5 +9,6 @@ public class GrainFiltersServiceModule : ServiceModule
     {
         services.AddSingleton<IIncomingGrainCallFilter, IncomingRequestContextFilter>();
         services.AddSingleton<IOutgoingGrainCallFilter, OutgoingRequestContextFilter>();
+        services.AddSingleton<IIncomingGrainCallFilter, LoggingFilter>();
     }
 }
