@@ -11,7 +11,6 @@ public static class LoggingExtensions
             logger
                 .Enrich.FromLogContext()
                 .Enrich.With(services.GetRequiredService<RequestContextEnricher>())
-                // .WriteTo.Console()
                 .ReadFrom.Configuration(ctx.Configuration);
         });
     }

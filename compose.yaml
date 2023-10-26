@@ -3,20 +3,19 @@
     image: "mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest"
     tty: true
     ports:
-      - "8081:8081"
-      - "10250:10250"
-      - "10251:10251"
-      - "10252:10252"
-      - "10253:10253"
-      - "10254:10254"
-      - "10255:10255"
+      - 8081:8081
+      - 10251:10251
+      - 10252:10252
+      - 10253:10253
+      - 10254:10254
+    expose:
+      - "8081"
+      - "10251-10255"
+    environment:
+      - AZURE_COSMOS_EMULATOR_PARTITION_COUNT=6
+      - AZURE_COSMOS_EMULATOR_ENABLE_DATA_PERSISTENCE=true
     volumes:
-      - vol_cosmos:/data/db
-  
-  redis:
-    image: "redis:latest"
-    ports:
-      - "6379:6379"
+      - vol_cosmos:/tmp/cosmos/appdata
   
   seq:
     image: "datalust/seq:latest"
@@ -26,16 +25,37 @@
       - "45341:45341"
     environment:
       ACCEPT_EULA: Y
-    
+    volumes:
+      - vol_seq:/data
+  
+  zipkin-storage:
+    image: openzipkin/zipkin-cassandra
+    container_name: zipkin-cassandra
+    ports:
+      - "9042:9042"
+    volumes:
+      - vol_zipkin:/cassandra/data
+  
   zipkin:
     image: "openzipkin/zipkin:latest"
     ports:
       - "9411:9411"
-      
+    environment:
+      - STORAGE_TYPE=cassandra3
+      - CASSANDRA_ENSURE_SCHEMA=false
+      - CASSANDRA_CONTACT_POINTS=zipkin-cassandra
+    depends_on: 
+      - zipkin-storage
+  
   ghzweb:
     image: "ghz-web:latest"
     ports:
       - "8083:80"
-      
+    volumes:
+      - vol_ghzweb:/data
+
 volumes:
   vol_cosmos:
+  vol_zipkin:
+  vol_seq:
+  vol_ghzweb:

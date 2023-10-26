@@ -1,4 +1,4 @@
-﻿using DistributedCounter.CounterService.Domain.CounterAggregate;
+﻿using DistributedCounter.CounterService.Domain.Counters;
 using MediatR;
 
 namespace DistributedCounter.CounterService.Application.Counters.CreateCounter;

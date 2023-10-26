@@ -1,7 +1,7 @@
 param (
     [string]$Uri = "localhost:50051",
     [int]$InitialValue = 0,
-    [string]$GhzWebUri = "http://localhost:8181",
+    [string]$GhzWebUri = "http://localhost:8083",
     [int]$ProjectId = 1,
     [string]$Tags = "{}"
 )
