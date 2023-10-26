@@ -1,6 +1,9 @@
+using DistributedCounter.CounterService.API;
 using DistributedCounter.CounterService.API.Common.Logging;
-using DistributedCounter.CounterService.API.Common.Orleans;
 using DistributedCounter.CounterService.API.Counters.Services;
+using DistributedCounter.CounterService.Application;
+using DistributedCounter.CounterService.Domain;
+using DistributedCounter.CounterService.Utilities;
 using DistributedCounter.CounterService.Utilities.DependencyInjection;
 using Serilog;
 
@@ -11,12 +14,22 @@ Log.Logger = new LoggerConfiguration()
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.ConfigureLogging();
-builder.ConfigureOrleans();
-builder.Services.RegisterFromServiceModules(servicesAvailableToModules: services =>
-{
-    services.AddSingleton<IConfiguration>(builder.Configuration);
-    services.AddSingleton(builder.Environment);
-});
+builder.Services.RegisterFromServiceModules(
+    new []
+    {
+        typeof(DomainServiceModule).Assembly,
+        typeof(ApplicationServiceModule).Assembly,
+        typeof(InfrastructureServiceModule).Assembly,
+        typeof(ApiServiceModule).Assembly,
+        typeof(UtilitiesServiceModule).Assembly
+    },
+    servicesAvailableToModules: services =>
+    {
+        services.AddSingleton<IConfiguration>(builder.Configuration);
+        services.AddSingleton(builder.Environment);
+        services.AddSingleton<IHostEnvironment>(sp => sp.GetRequiredService<IWebHostEnvironment>());
+    }
+);
 
 var app = builder.Build();
 

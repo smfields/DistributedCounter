@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace DistributedCounter.CounterService.Utilities.DependencyInjection;
@@ -7,6 +8,7 @@ public static class ServiceModuleExtensions
 {
     public static void RegisterFromServiceModules(
         this IServiceCollection services,
+        IEnumerable<Assembly> assemblies,
         Action<IServiceCollection>? servicesAvailableToModules = null
     )
     {
@@ -17,7 +19,7 @@ public static class ServiceModuleExtensions
         servicesAvailableToModules?.Invoke(serviceCollection);
 
         // Scan for all service modules and register with DI container
-        AppDomain.CurrentDomain.GetAssemblies()
+        assemblies
             .SelectMany(assembly => assembly.GetTypes())
             .Where(type => type.IsAssignableTo(typeof(ServiceModule)) && !type.IsAbstract)
             .ToList()
