@@ -1,0 +1,41 @@
+﻿services:
+  comsosdb:
+    image: "mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest"
+    tty: true
+    ports:
+      - "8081:8081"
+      - "10250:10250"
+      - "10251:10251"
+      - "10252:10252"
+      - "10253:10253"
+      - "10254:10254"
+      - "10255:10255"
+    volumes:
+      - vol_cosmos:/data/db
+  
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+  
+  seq:
+    image: "datalust/seq:latest"
+    ports:
+      - "8082:80"
+      - "5341:5341"
+      - "45341:45341"
+    environment:
+      ACCEPT_EULA: Y
+    
+  zipkin:
+    image: "openzipkin/zipkin:latest"
+    ports:
+      - "9411:9411"
+      
+  ghzweb:
+    image: "ghz-web:latest"
+    ports:
+      - "8083:80"
+      
+volumes:
+  vol_cosmos:

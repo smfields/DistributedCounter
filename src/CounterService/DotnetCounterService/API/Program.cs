@@ -11,7 +11,7 @@ Log.Logger = new LoggerConfiguration()
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.ConfigureLogging();
-builder.Host.ConfigureOrleans();
+builder.ConfigureOrleans();
 builder.Services.RegisterFromServiceModules(servicesAvailableToModules: services =>
 {
     services.AddSingleton<IConfiguration>(builder.Configuration);
