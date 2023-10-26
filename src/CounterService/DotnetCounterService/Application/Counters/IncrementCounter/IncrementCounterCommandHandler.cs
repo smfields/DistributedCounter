@@ -10,12 +10,12 @@ public record IncrementCounterResponse
     public static readonly IncrementCounterResponse Empty = new();
 }
 
-public class IncrementCounterCommandHandler(CounterClient.Factory counterClientFactory) : IRequestHandler<IncrementCounterCommand, IncrementCounterResponse>
+public class IncrementCounterCommandHandler(IGrainFactory grainFactory) : IRequestHandler<IncrementCounterCommand, IncrementCounterResponse>
 {
     public async Task<IncrementCounterResponse> Handle(IncrementCounterCommand command, CancellationToken cancellationToken)
     {
-        var counterClient = counterClientFactory.CreateClientFor(command.CounterId);
-        await counterClient.Increment(command.Amount);
+        var counter = grainFactory.GetGrain<ICounter>(command.CounterId);
+        await counter.Increment(command.Amount);
         return IncrementCounterResponse.Empty;
     }
 }
