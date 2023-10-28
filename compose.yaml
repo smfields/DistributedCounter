@@ -33,9 +33,11 @@
     container_name: zipkin-cassandra
     ports:
       - "9042:9042"
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx2g -XX:+ExitOnOutOfMemoryError
     volumes:
       - vol_zipkin:/cassandra/data
-  
+
   zipkin:
     image: "openzipkin/zipkin:latest"
     ports:
@@ -44,9 +46,10 @@
       - STORAGE_TYPE=cassandra3
       - CASSANDRA_ENSURE_SCHEMA=false
       - CASSANDRA_CONTACT_POINTS=zipkin-cassandra
+      - JAVA_OPTS=-Xms256m -Xmx2g -XX:+ExitOnOutOfMemoryError
     depends_on: 
       - zipkin-storage
-  
+        
   ghzweb:
     image: "ghz-web:latest"
     ports:
