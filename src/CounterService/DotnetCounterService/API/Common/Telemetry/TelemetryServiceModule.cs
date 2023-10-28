@@ -1,4 +1,5 @@
 ﻿using DistributedCounter.CounterService.Utilities.DependencyInjection;
+using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -23,12 +24,14 @@ public class TelemetryServiceModule(IConfiguration configuration) : ServiceModul
                 tracing.AddAspNetCoreInstrumentation();
                 // tracing.AddSource("Microsoft.Orleans.Runtime");
                 tracing.AddSource("Microsoft.Orleans.Application");
-
+                
                 if (zipkinOptions.Enabled)
                 {
                     tracing.AddZipkinExporter(zipkin =>
                     {
                         zipkin.Endpoint = new Uri(zipkinOptions.Endpoint);
+                        zipkin.BatchExportProcessorOptions.MaxQueueSize = 4096 * 10;
+                        zipkin.BatchExportProcessorOptions.ScheduledDelayMilliseconds = 2500;
                     });
                 }
             });
