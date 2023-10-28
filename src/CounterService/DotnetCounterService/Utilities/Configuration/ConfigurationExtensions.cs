@@ -1,4 +1,5 @@
-﻿using DistributedCounter.CounterService.Utilities.Configuration;
+﻿using System.ComponentModel.DataAnnotations;
+using DistributedCounter.CounterService.Utilities.Configuration;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ public static class ConfigurationExtensions
         var options = new TOptions();
         var section = configuration.GetSection(TOptions.Section);
         section.Bind(options);
+        Validator.ValidateObject(options, new ValidationContext(options), true);
         return options;
     }
 }

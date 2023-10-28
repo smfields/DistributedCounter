@@ -16,6 +16,6 @@ public static class ServiceCollectionExtensions
     public static void RegisterOptions<TOptions>(this IServiceCollection services, IConfiguration configuration)
         where TOptions : class, IOptions, new()
     {
-        services.Configure<TOptions>(configuration.GetSection(TOptions.Section));
+        services.AddOptionsWithValidateOnStart<TOptions>().Bind(configuration.GetSection(TOptions.Section));
     }
 }

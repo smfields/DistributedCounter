@@ -14,26 +14,27 @@ public class OrleansServiceModule(IConfiguration configuration, IWebHostEnvironm
         {
             siloBuilder
                 .AddActivityPropagation()
-                .AddCosmosGrainStorageAsDefault(configureOptions: options =>
-                {
-                    options.DatabaseName = "Orleans";
-                    options.DatabaseThroughput = 1000;
-                    options.ContainerName = "OrleansStorage";
-                    options.ConfigureCosmosClient(databaseOptions.ConnectionString);
-
-                    if (environment.IsDevelopment())
-                    {
-                        options.ClientOptions = new CosmosClientOptions()
-                        {
-                            HttpClientFactory = () => new HttpClient(new HttpClientHandler()
-                            {
-                                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                            }),
-                            ConnectionMode = ConnectionMode.Gateway,
-                            LimitToEndpoint = true
-                        };
-                    }
-                });
+                .AddMemoryGrainStorageAsDefault();
+                // .AddCosmosGrainStorageAsDefault(configureOptions: options =>
+                // {
+                //     options.DatabaseName = "Orleans";
+                //     options.DatabaseThroughput = 1000;
+                //     options.ContainerName = "OrleansStorage";
+                //     options.ConfigureCosmosClient(databaseOptions.ConnectionString);
+                //
+                //     if (environment.IsDevelopment())
+                //     {
+                //         options.ClientOptions = new CosmosClientOptions()
+                //         {
+                //             HttpClientFactory = () => new HttpClient(new HttpClientHandler()
+                //             {
+                //                 ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                //             }),
+                //             ConnectionMode = ConnectionMode.Gateway,
+                //             LimitToEndpoint = true
+                //         };
+                //     }
+                // });
 
             if (environment.IsDevelopment())
             {
