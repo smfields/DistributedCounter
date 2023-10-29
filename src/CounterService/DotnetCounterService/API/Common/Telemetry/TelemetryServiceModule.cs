@@ -1,5 +1,4 @@
 ﻿using DistributedCounter.CounterService.Utilities.DependencyInjection;
-using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -10,6 +9,8 @@ public class TelemetryServiceModule(IConfiguration configuration) : ServiceModul
     public override void Load(IServiceCollection services)
     {
         var zipkinOptions = configuration.GetOptions<ZipkinOptions>();
+        
+        AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
         
         services
             .AddOpenTelemetry()
@@ -22,8 +23,9 @@ public class TelemetryServiceModule(IConfiguration configuration) : ServiceModul
                 );
 
                 tracing.AddAspNetCoreInstrumentation();
-                // tracing.AddSource("Microsoft.Orleans.Runtime");
+                tracing.AddSource("Microsoft.Orleans.Runtime");
                 tracing.AddSource("Microsoft.Orleans.Application");
+                tracing.AddSource("Azure.Cosmos.Operation");
                 
                 if (zipkinOptions.Enabled)
                 {

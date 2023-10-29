@@ -44,7 +44,7 @@ public class Counter(
     {
         EnsureInitialized();
         
-        logger.LogDebug("Gathering current counter value for {CounterId}", Id);
+        logger.LogDebug("Gathering current counter value for {CounterId} from {NumShards} shards", Id, Shards.Count);
         
         var tasks = Shards.Select(async shard => await shard.GetCurrentValue());
         var values = await Task.WhenAll(tasks);
