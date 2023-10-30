@@ -25,7 +25,7 @@ public class CounterState
 public class Counter(
     IGrainFactory grainFactory,
     [PersistentState("counter")]IPersistentState<CounterState> counterState,
-    IOptions<CounterOptions> options,
+    IOptionsSnapshot<CounterOptions> options,
     ILogger<Counter> logger
 ) : Grain, ICounter
 {
