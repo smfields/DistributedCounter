@@ -395,6 +395,7 @@ FodyWeavers.xsd
 *.msp
 
 # JetBrains Rider
+.idea/
 *.sln.iml
 **/ghz-web/data/**
 appsettings.Development.json
