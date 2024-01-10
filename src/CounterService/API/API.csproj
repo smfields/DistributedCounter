@@ -40,7 +40,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Protobuf Include="..\..\Shared\Protos\counter_service.proto">
+      <Protobuf Include="..\Shared\Protos\counter_service.proto">
         <Link>Counters\Protos\counter_service.proto</Link>
         <Generator>MSBuild:Compile</Generator>
       </Protobuf>

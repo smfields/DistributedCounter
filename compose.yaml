@@ -51,7 +51,7 @@
       - zipkin-storage
         
   ghzweb:
-    image: "ghz-web:latest"
+    build: ./test/Benchmarking/ghz-web
     ports:
       - "8083:80"
     volumes:

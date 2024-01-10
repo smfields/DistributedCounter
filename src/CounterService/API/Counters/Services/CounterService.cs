@@ -1,9 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using DistributedCounter.CounterService.Application.Counters.CreateCounter;
-using DistributedCounter.CounterService.Application.Counters.DecrementCounter;
-using DistributedCounter.CounterService.Application.Counters.GetCounterValue;
-using DistributedCounter.CounterService.Application.Counters.IncrementCounter;
+using DistributedCounter.CounterService.Application.Counters;
 using DistributedCounter.Protos;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
@@ -14,9 +11,9 @@ using IncrementCounterResponse = DistributedCounter.Protos.IncrementCounterRespo
 
 namespace DistributedCounter.CounterService.API.Counters.Services;
 
-public class CounterService(ISender sender, ILogger<CounterService> logger) : Protos.CounterService.CounterServiceBase
+public class CounterService(ISender sender) : Protos.CounterService.CounterServiceBase
 {
-    private static Guid _serverId = Guid.NewGuid();
+    private static readonly Guid ServerId = Guid.NewGuid();
 
     public override Task<CounterServiceMetadata> GetMetadata(Empty request, ServerCallContext context)
     {
@@ -29,7 +26,7 @@ public class CounterService(ISender sender, ILogger<CounterService> logger) : Pr
             },
             ServerMetadata = new ServerMetadata
             {
-                Id = _serverId.ToString(),
+                Id = ServerId.ToString(),
                 Platform = RuntimeInformation.RuntimeIdentifier,
                 UpTime = Environment.TickCount64
             },
@@ -43,7 +40,7 @@ public class CounterService(ISender sender, ILogger<CounterService> logger) : Pr
 
     public override async Task<CreateCounterResponse> CreateCounter(CreateCounterRequest request, ServerCallContext context)
     {
-        var command = new CreateCounterCommand(request.InitialValue);
+        var command = new CreateCounter.Command(request.InitialValue);
         var response = await sender.Send(command);
         return new CreateCounterResponse
         {
@@ -62,7 +59,7 @@ public class CounterService(ISender sender, ILogger<CounterService> logger) : Pr
             throw new RpcException(status);
         }
 
-        var command = new IncrementCounterCommand(id, request.IncrementAmount);
+        var command = new IncrementCounter.Command(id, request.IncrementAmount);
         await sender.Send(command);
 
         return new IncrementCounterResponse();
@@ -79,7 +76,7 @@ public class CounterService(ISender sender, ILogger<CounterService> logger) : Pr
             throw new RpcException(status);
         }
 
-        var command = new DecrementCounterCommand(id, request.DecrementAmount);
+        var command = new DecrementCounter.Command(id, request.DecrementAmount);
         await sender.Send(command);
 
         return new DecrementCounterResponse();
@@ -96,7 +93,7 @@ public class CounterService(ISender sender, ILogger<CounterService> logger) : Pr
             throw new RpcException(status);
         }
 
-        var query = new GetCounterValueQuery(id);
+        var query = new GetCounterValue.Query(id);
         var response = await sender.Send(query);
 
         return new GetCurrentValueResponse
