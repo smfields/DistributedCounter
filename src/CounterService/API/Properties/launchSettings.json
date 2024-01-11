@@ -6,7 +6,9 @@
       "launchBrowser": false,
       "applicationUrl": "http://localhost:50051",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_Zipkin__Endpoint": " http://localhost:9411/api/v2/spans",
+        "Serilog__WriteTo__0__Args__serverUrl": "http://localhost:5341"
       }
     }
   }

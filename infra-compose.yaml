@@ -1,22 +1,4 @@
 ﻿services:
-  comsosdb:
-    image: "mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest"
-    tty: true
-    ports:
-      - 8081:8081
-      - 10251:10251
-      - 10252:10252
-      - 10253:10253
-      - 10254:10254
-    expose:
-      - "8081"
-      - "10251-10255"
-    environment:
-      - AZURE_COSMOS_EMULATOR_PARTITION_COUNT=6
-      - AZURE_COSMOS_EMULATOR_ENABLE_DATA_PERSISTENCE=false
-    volumes:
-      - vol_cosmos:/tmp/cosmos/appdata
-      
   seq:
     image: "datalust/seq:latest"
     ports:
@@ -47,18 +29,9 @@
       - CASSANDRA_ENSURE_SCHEMA=false
       - CASSANDRA_CONTACT_POINTS=zipkin-cassandra
       - JAVA_OPTS=-Xms256m -Xmx2g -XX:+ExitOnOutOfMemoryError
-    depends_on: 
+    depends_on:
       - zipkin-storage
-        
-  ghzweb:
-    build: ./test/Benchmarking/ghz-web
-    ports:
-      - "8083:80"
-    volumes:
-      - vol_ghzweb:/data
 
 volumes:
-  vol_cosmos:
   vol_zipkin:
   vol_seq:
-  vol_ghzweb:
