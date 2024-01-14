@@ -8,6 +8,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_Zipkin__Endpoint": " http://localhost:9411/api/v2/spans",
+        "ASPNETCORE_Orleans__EventStoreDbConnectionString": "esdb://127.0.0.1:2113?tls=false",
         "Serilog__WriteTo__0__Args__serverUrl": "http://localhost:5341"
       }
     }
