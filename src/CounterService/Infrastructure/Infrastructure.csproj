@@ -11,4 +11,9 @@
       <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Orleans.Server" Version="8.0.0" />
+      <PackageReference Include="Orleans.EventSourcing.EventStorage.EventStore" Version="0.0.4" />
+    </ItemGroup>
+
 </Project>

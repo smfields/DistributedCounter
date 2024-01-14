@@ -1,10 +1,12 @@
 ﻿using DistributedCounter.CounterService.Domain.Persistence;
 using DistributedCounter.CounterService.Utilities.DependencyInjection;
-using Microsoft.Azure.Cosmos;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-namespace DistributedCounter.CounterService.API.Common.Orleans;
+namespace DistributedCounter.CounterService.Domain.Orleans;
 
-public class OrleansServiceModule(IConfiguration configuration, IWebHostEnvironment environment) : ServiceModule
+public class OrleansServiceModule(IConfiguration configuration, IHostEnvironment environment) : ServiceModule
 {
     public override void Load(IServiceCollection services)
     {
@@ -22,13 +24,7 @@ public class OrleansServiceModule(IConfiguration configuration, IWebHostEnvironm
             }
             else
             {
-                siloBuilder.UseCosmosClustering(configureOptions: options =>
-                {
-                    options.DatabaseName = "Orleans";
-                    options.DatabaseThroughput = 1000;
-                    options.ContainerName = "OrleansCluster";
-                    options.ConfigureCosmosClient(databaseOptions.ConnectionString);
-                });
+                
             }
         });
     }

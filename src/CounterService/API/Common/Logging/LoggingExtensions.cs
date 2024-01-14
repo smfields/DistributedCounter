@@ -1,5 +1,4 @@
-﻿using DistributedCounter.CounterService.API.Common.Logging.Enrichers;
-using Serilog;
+﻿using Serilog;
 
 namespace DistributedCounter.CounterService.API.Common.Logging;
 
@@ -10,7 +9,6 @@ public static class LoggingExtensions
         host.UseSerilog((ctx, services, logger) => {
             logger
                 .Enrich.FromLogContext()
-                .Enrich.With(services.GetRequiredService<RequestContextEnricher>())
                 .ReadFrom.Configuration(ctx.Configuration);
         });
     }

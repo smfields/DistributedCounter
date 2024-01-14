@@ -1,5 +1,4 @@
-﻿using DistributedCounter.CounterService.API.Common.Grpc.Interceptors;
-using DistributedCounter.CounterService.Utilities.DependencyInjection;
+﻿using DistributedCounter.CounterService.Utilities.DependencyInjection;
 
 namespace DistributedCounter.CounterService.API.Common.Grpc;
 
@@ -10,7 +9,6 @@ public class GrpcServiceModule : ServiceModule
         services.AddGrpc(opts =>
         {
             opts.EnableDetailedErrors = true;
-            opts.Interceptors.Add<RequestContextInterceptor>();
         });
         
         services.AddGrpcReflection();
