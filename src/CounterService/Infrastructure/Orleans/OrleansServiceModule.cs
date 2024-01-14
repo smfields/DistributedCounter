@@ -1,5 +1,4 @@
-﻿using DistributedCounter.CounterService.Domain.Persistence;
-using DistributedCounter.CounterService.Utilities.DependencyInjection;
+﻿using DistributedCounter.CounterService.Utilities.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,8 +9,6 @@ public class OrleansServiceModule(IConfiguration configuration, IHostEnvironment
 {
     public override void Load(IServiceCollection services)
     {
-        var databaseOptions = configuration.GetOptions<DatabaseOptions>();
-        
         services.AddOrleans(siloBuilder =>
         {
             siloBuilder

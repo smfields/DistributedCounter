@@ -1,8 +1,8 @@
 using DistributedCounter.CounterService.API;
-using DistributedCounter.CounterService.API.Common.Logging;
 using DistributedCounter.CounterService.API.Counters.Services;
 using DistributedCounter.CounterService.Application;
 using DistributedCounter.CounterService.Domain;
+using DistributedCounter.CounterService.Domain.Logging;
 using DistributedCounter.CounterService.Utilities;
 using DistributedCounter.CounterService.Utilities.DependencyInjection;
 using Serilog;

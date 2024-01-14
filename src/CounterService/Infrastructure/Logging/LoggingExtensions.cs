@@ -1,6 +1,7 @@
-﻿using Serilog;
+﻿using Microsoft.AspNetCore.Builder;
+using Serilog;
 
-namespace DistributedCounter.CounterService.API.Common.Logging;
+namespace DistributedCounter.CounterService.Domain.Logging;
 
 public static class LoggingExtensions
 {
