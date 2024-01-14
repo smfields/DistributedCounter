@@ -38,7 +38,7 @@ public class CounterState
 
     public void Apply(CounterDecrementedEvent counterDecrementedEvent)
     {
-        Value += counterDecrementedEvent.Amount;
+        Value -= counterDecrementedEvent.Amount;
     }
 }
 
