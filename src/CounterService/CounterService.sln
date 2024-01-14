@@ -10,6 +10,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{35747924-1707-4BE3-A84A-5E14A6BF001D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose", "docker-compose", "{02D4BF18-4A26-40F3-A979-E32676515574}"
+	ProjectSection(SolutionItems) = preProject
+		counter-service-compose.yaml = counter-service-compose.yaml
+		..\..\docker-compose\shared-infrastructure-compose.yaml = ..\..\docker-compose\shared-infrastructure-compose.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
