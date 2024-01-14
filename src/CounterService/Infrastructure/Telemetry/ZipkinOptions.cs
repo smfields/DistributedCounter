@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using DistributedCounter.CounterService.Utilities.Configuration;
 
-namespace DistributedCounter.CounterService.API.Common.Telemetry;
+namespace DistributedCounter.CounterService.Infrastructure.Telemetry;
 
 public class ZipkinOptions : IOptions
 {

@@ -1,11 +1,10 @@
-﻿using DistributedCounter.CounterService.API.Common.Telemetry;
-using DistributedCounter.CounterService.Utilities.DependencyInjection;
+﻿using DistributedCounter.CounterService.Utilities.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace DistributedCounter.CounterService.Domain.Telemetry;
+namespace DistributedCounter.CounterService.Infrastructure.Telemetry;
 
 public class TelemetryServiceModule(IConfiguration configuration) : ServiceModule
 {

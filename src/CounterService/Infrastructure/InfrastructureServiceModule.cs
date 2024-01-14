@@ -1,7 +1,7 @@
 ﻿using DistributedCounter.CounterService.Utilities.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DistributedCounter.CounterService.Domain;
+namespace DistributedCounter.CounterService.Infrastructure;
 
 public class InfrastructureServiceModule : ServiceModule
 {

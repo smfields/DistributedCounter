@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DistributedCounter.CounterService.Domain.Orleans;
+namespace DistributedCounter.CounterService.Infrastructure.Orleans;
 
 public class OrleansServiceModule(IConfiguration configuration, IHostEnvironment environment) : ServiceModule
 {
