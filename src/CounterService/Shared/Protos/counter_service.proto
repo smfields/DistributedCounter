@@ -9,6 +9,7 @@ service CounterService {
   rpc CreateCounter(CreateCounterRequest) returns (CreateCounterResponse);
   rpc IncrementCounter(IncrementCounterRequest) returns (IncrementCounterResponse);
   rpc DecrementCounter(DecrementCounterRequest) returns (DecrementCounterResponse);
+  rpc ResetCounter(ResetCounterRequest) returns (ResetCounterResponse);
   rpc GetCurrentValue(GetCurrentValueRequest) returns (GetCurrentValueResponse);
 }
 
@@ -49,6 +50,15 @@ message IncrementCounterRequest {
 
 message IncrementCounterResponse {
   
+}
+
+message ResetCounterRequest {
+  string counter_id = 1;
+  sint64 updated_value = 2;
+}
+
+message ResetCounterResponse {
+
 }
 
 message DecrementCounterRequest {

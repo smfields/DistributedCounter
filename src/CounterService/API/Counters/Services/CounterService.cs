@@ -48,6 +48,23 @@ public class CounterService(ISender sender) : Protos.CounterService.CounterServi
         };
     }
 
+    public override async Task<ResetCounterResponse> ResetCounter(ResetCounterRequest request, ServerCallContext context)
+    {
+        if (!Guid.TryParse(request.CounterId, out var id))
+        {
+            var status = new Status(
+                StatusCode.InvalidArgument,
+                $"{nameof(request.CounterId)} is not a valid GUID"
+            );
+            throw new RpcException(status);
+        }
+        
+        var command = new ResetCounter.Command(id, request.UpdatedValue);
+        await sender.Send(command);
+
+        return new ResetCounterResponse();
+    }
+
     public override async Task<IncrementCounterResponse> IncrementCounter(IncrementCounterRequest request, ServerCallContext context)
     {
         if (!Guid.TryParse(request.CounterId, out var id))

@@ -10,17 +10,25 @@ public interface ICounter : IGrainWithGuidKey
     [ReadOnly]
     public ValueTask<long> GetCurrentValue();
     public ValueTask Initialize(long initialValue);
+    public ValueTask Reset(long newValue);
     public ValueTask Increment(uint amount);
     public ValueTask Decrement(uint amount);
 }
 
 public class CounterState
 {
+    public bool Initialized { get; private set; } = false;
     public long Value { get; private set; }
 
     public void Apply(CounterInitializedEvent counterInitializedEvent)
     {
+        Initialized = true;
         Value = counterInitializedEvent.InitialValue;
+    }
+
+    public void Apply(CounterResetEvent counterResetEvent)
+    {
+        Value = counterResetEvent.NewValue;
     }
 
     public void Apply(CounterIncrementedEvent counterIncrementedEvent)
@@ -49,6 +57,13 @@ public class Counter(ILogger<Counter> logger) : JournaledGrain<CounterState>, IC
     {
         logger.LogInformation("Initializing counter {CounterId} to {InitialValue}", Id, initialValue);
         RaiseEvent(new CounterInitializedEvent(initialValue));
+        await ConfirmEvents();
+    }
+
+    public async ValueTask Reset(long newValue)
+    {
+        logger.LogInformation("Resetting counter {CounterId} to {NewValue}", Id, newValue);
+        RaiseEvent(new CounterResetEvent(newValue));
         await ConfirmEvents();
     }
 
