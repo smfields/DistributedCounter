@@ -1,0 +1,10 @@
+﻿services:
+  ghzweb:
+    build: .
+    ports:
+      - "8083:80"
+    volumes:
+      - vol_ghzweb:/data
+        
+volumes:
+  vol_ghzweb:
