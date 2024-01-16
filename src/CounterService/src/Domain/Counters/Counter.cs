@@ -42,7 +42,6 @@ public class CounterState
     }
 }
 
-[Reentrant]
 public class Counter(ILogger<Counter> logger) : JournaledGrain<CounterState>, ICounter
 {
     private Guid Id => this.GetPrimaryKey();
