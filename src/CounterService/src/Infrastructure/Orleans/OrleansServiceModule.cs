@@ -1,9 +1,12 @@
-﻿using DistributedCounter.CounterService.Utilities.DependencyInjection;
+﻿using DistributedCounter.CounterService.Infrastructure.Orleans.Converters;
+using DistributedCounter.CounterService.Utilities.DependencyInjection;
 using EventStore.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using Orleans.Clustering.Kubernetes;
+using Orleans.Serialization;
 
 namespace DistributedCounter.CounterService.Infrastructure.Orleans;
 
@@ -22,7 +25,7 @@ public class OrleansServiceModule(IConfiguration configuration, IHostEnvironment
                 {
                     opts.ClientSettings = EventStoreClientSettings.Create(orleansOptions.EventStoreDbConnectionString);
                 });
-
+            
             if (environment.IsDevelopment())
             {
                 siloBuilder.UseLocalhostClustering();

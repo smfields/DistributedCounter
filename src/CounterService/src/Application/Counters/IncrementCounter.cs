@@ -5,7 +5,7 @@ namespace DistributedCounter.CounterService.Application.Counters;
 
 public static class IncrementCounter
 {
-    public record Command(Guid CounterId, uint Amount) : IRequest<Response>;
+    public record Command(Guid CounterId, ulong Amount) : IRequest<Response>;
 
     public record Response
     {
@@ -17,7 +17,7 @@ public static class IncrementCounter
         public async Task<Response> Handle(Command command, CancellationToken cancellationToken)
         {
             var counter = grainFactory.GetGrain<ICounter>(command.CounterId);
-            await counter.Increment(command.Amount);
+            var response = await counter.Increment(command.Amount);
             return Response.Empty;
         }
     }

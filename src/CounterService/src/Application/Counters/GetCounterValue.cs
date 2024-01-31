@@ -14,8 +14,8 @@ public static class GetCounterValue
         public async Task<Response> Handle(Query query, CancellationToken cancellationToken)
         {
             var counter = grainFactory.GetGrain<ICounter>(query.CounterId);
-            var currentValue = await counter.GetCurrentValue();
-            return new Response(currentValue);
+            var result = await counter.GetCurrentValue();
+            return new Response(result.Value);
         }
     }
 

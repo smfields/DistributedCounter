@@ -45,7 +45,7 @@ message CreateCounterResponse {
 
 message IncrementCounterRequest {
   string counter_id = 1;
-  uint32 increment_amount = 2;
+  uint64 increment_amount = 2;
 }
 
 message IncrementCounterResponse {
@@ -63,7 +63,7 @@ message ResetCounterResponse {
 
 message DecrementCounterRequest {
   string counter_id = 1;
-  uint32 decrement_amount = 2;
+  uint64 decrement_amount = 2;
 }
 
 message DecrementCounterResponse {

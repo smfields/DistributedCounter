@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Orleans.Hosting.Kubernetes" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Orleans.Serialization.NewtonsoftJson" Version="8.0.0" />
       <PackageReference Include="Microsoft.Orleans.Server" Version="8.0.0" />
       <PackageReference Include="Orleans.Clustering.Kubernetes" Version="8.0.1" />
       <PackageReference Include="Orleans.EventSourcing.EventStorage.EventStore" Version="8.0.0" />

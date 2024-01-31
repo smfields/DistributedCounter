@@ -1,3 +1,3 @@
 ﻿namespace DistributedCounter.CounterService.Domain.Counters.Events;
 
-public record CounterDecrementedEvent(uint Amount);
+public record CounterDecrementedEvent(ulong Amount);
