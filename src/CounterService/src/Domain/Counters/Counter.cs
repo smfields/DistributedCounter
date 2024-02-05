@@ -71,7 +71,7 @@ public class Counter(ILogger<Counter> logger) : JournaledGrain<CounterState>, IC
 
         if (State.Initialized)
         {
-            return new CounterAlreadyInitializedError(Id);
+            return new CounterAlreadyExistsError(Id);
         }
         
         RaiseEvent(new CounterInitializedEvent(initialValue));
@@ -86,7 +86,7 @@ public class Counter(ILogger<Counter> logger) : JournaledGrain<CounterState>, IC
         
         if (!State.Initialized)
         {
-            return new CounterNotInitializedError(Id);
+            return new CounterNotCreatedError(Id);
         }
         
         RaiseEvent(new CounterResetEvent(newValue));
@@ -101,7 +101,7 @@ public class Counter(ILogger<Counter> logger) : JournaledGrain<CounterState>, IC
         
         if (!State.Initialized)
         {
-            return new CounterNotInitializedError(Id);
+            return new CounterNotCreatedError(Id);
         }
 
         if (WouldOverflow(amount))
@@ -121,7 +121,7 @@ public class Counter(ILogger<Counter> logger) : JournaledGrain<CounterState>, IC
         
         if (!State.Initialized)
         {
-            return new CounterNotInitializedError(Id);
+            return new CounterNotCreatedError(Id);
         }
         
         if (WouldUnderflow(amount))

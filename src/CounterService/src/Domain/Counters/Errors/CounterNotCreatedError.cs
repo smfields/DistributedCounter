@@ -3,11 +3,11 @@
 namespace DistributedCounter.CounterService.Domain.Counters.Errors;
 
 [GenerateSerializer]
-public class CounterNotFoundError(Guid counterId) : DetailedError($"Could not find counter with id: {counterId}")
+public class CounterNotCreatedError(Guid counterId) : DetailedError($"Counter ({counterId}) has not been created yet")
 {
-    public override ErrorType Type => ErrorType.NotFound;
+    public override ErrorType Type => ErrorType.FailedPrecondition;
 
-    public override string Identifier => "COUNTER_NOT_FOUND";
+    public override string Identifier => "COUNTER_NOT_CREATED";
 
     [Id(0)]
     public Guid CounterId { get; } = counterId;

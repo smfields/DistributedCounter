@@ -3,15 +3,15 @@
 namespace DistributedCounter.CounterService.Domain.Counters.Errors;
 
 [GenerateSerializer]
-public class CounterNotFoundError(Guid counterId) : DetailedError($"Could not find counter with id: {counterId}")
+public class CounterAlreadyExistsError(Guid counterId) : DetailedError($"Counter ({counterId}) has already been initialized")
 {
-    public override ErrorType Type => ErrorType.NotFound;
+    public override ErrorType Type => ErrorType.AlreadyExists;
 
-    public override string Identifier => "COUNTER_NOT_FOUND";
+    public override string Identifier => "COUNTER_ALREADY_EXISTS";
 
-    [Id(0)]
+    [Id(1)]
     public Guid CounterId { get; } = counterId;
-    
+
     public override void Accept(IErrorVisitor visitor)
     {
         visitor.Visit(this);

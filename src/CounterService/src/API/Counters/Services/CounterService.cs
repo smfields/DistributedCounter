@@ -1,7 +1,13 @@
-﻿using System.Reflection;
+﻿extern alias commonprotos;
+
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using DistributedCounter.CounterService.API.Common.Grpc.Errors;
 using DistributedCounter.CounterService.Application.Counters;
+using DistributedCounter.CounterService.Utilities.Errors;
 using DistributedCounter.Protos;
+using FluentResults;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using MediatR;
@@ -42,6 +48,7 @@ public class CounterService(ISender sender) : Protos.CounterService.CounterServi
     {
         var command = new CreateCounter.Command(request.InitialValue);
         var response = await sender.Send(command);
+        
         return new CreateCounterResponse
         {
             CounterId = response.CounterId.ToString()
@@ -50,15 +57,7 @@ public class CounterService(ISender sender) : Protos.CounterService.CounterServi
 
     public override async Task<ResetCounterResponse> ResetCounter(ResetCounterRequest request, ServerCallContext context)
     {
-        if (!Guid.TryParse(request.CounterId, out var id))
-        {
-            var status = new Status(
-                StatusCode.InvalidArgument,
-                $"{nameof(request.CounterId)} is not a valid GUID"
-            );
-            throw new RpcException(status);
-        }
-        
+        var id = ParseGuid(request.CounterId, "counter_id");
         var command = new ResetCounter.Command(id, request.UpdatedValue);
         await sender.Send(command);
 
@@ -67,32 +66,18 @@ public class CounterService(ISender sender) : Protos.CounterService.CounterServi
 
     public override async Task<IncrementCounterResponse> IncrementCounter(IncrementCounterRequest request, ServerCallContext context)
     {
-        if (!Guid.TryParse(request.CounterId, out var id))
-        {
-            var status = new Status(
-                StatusCode.InvalidArgument,
-                $"{nameof(request.CounterId)} is not a valid GUID"
-            );
-            throw new RpcException(status);
-        }
-
+        var id = ParseGuid(request.CounterId, "counter_id");
         var command = new IncrementCounter.Command(id, request.IncrementAmount);
-        await sender.Send(command);
+        var response = await sender.Send(command);
+        
+        response.Result.ThrowIfFailed();
 
         return new IncrementCounterResponse();
     }
 
     public override async Task<DecrementCounterResponse> DecrementCounter(DecrementCounterRequest request, ServerCallContext context)
     {
-        if (!Guid.TryParse(request.CounterId, out var id))
-        {
-            var status = new Status(
-                StatusCode.InvalidArgument,
-                $"{nameof(request.CounterId)} is not a valid GUID"
-            );
-            throw new RpcException(status);
-        }
-
+        var id = ParseGuid(request.CounterId, "counter_id");
         var command = new DecrementCounter.Command(id, request.DecrementAmount);
         await sender.Send(command);
 
@@ -101,15 +86,7 @@ public class CounterService(ISender sender) : Protos.CounterService.CounterServi
 
     public override async Task<GetCurrentValueResponse> GetCurrentValue(GetCurrentValueRequest request, ServerCallContext context)
     {
-        if (!Guid.TryParse(request.CounterId, out var id))
-        {
-            var status = new Status(
-                StatusCode.InvalidArgument,
-                $"{nameof(request.CounterId)} is not a valid GUID"
-            );
-            throw new RpcException(status);
-        }
-
+        var id = ParseGuid(request.CounterId, "counter_id");
         var query = new GetCounterValue.Query(id);
         var response = await sender.Send(query);
 
@@ -118,5 +95,19 @@ public class CounterService(ISender sender) : Protos.CounterService.CounterServi
             CounterId = request.CounterId,
             Value = response.CurrentValue
         };
+    }
+
+    private Guid ParseGuid(string value, string fieldPath)
+    {
+        if (Guid.TryParse(value, out var guid))
+        {
+            return guid;
+        }
+        
+        Result result = new InvalidArgumentError(
+        [
+            new InvalidArgumentError.FieldViolation(fieldPath, $"Could not parse \"{value}\" as a GUID")
+        ]);
+        throw new FailedResultException(result);
     }
 }
